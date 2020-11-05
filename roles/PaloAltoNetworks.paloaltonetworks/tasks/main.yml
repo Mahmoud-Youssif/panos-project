@@ -1,13 +1,16 @@
 ---
 # tasks file for ansible-pan-galaxy/
-
+- name: install pandevice
+  shell:  ./setup.py install
+  args:
+    chdir: ./roles/PaloAltoNetworks.paloaltonetworks/library/pandevice-0.14.0/
 # install required libraries
-- name: Install pan-python required library
-  pip:
-    name: pan-python
-- name: Install pandevice required library
-  pip:
-    name: pandevice
-- name: Install xmltodict required library
-  pip:
-    name: xmltodict
+#- name: Install pan-python required library
+#  pip:
+#    name: pan-python
+#- name: Install pandevice required library
+#  pip:
+#    name: pandevice
+#- name: Install xmltodict required library
+#  pip:
+#    name: xmltodict
