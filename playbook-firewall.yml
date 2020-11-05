@@ -6,35 +6,36 @@
   roles:
     - PaloAltoNetworks.paloaltonetworks
   tasks:
-    block: 
-       - name: set variables to right type
-         set_fact:
-           panos_source_zone: "{{ panos_source_zone | from_yaml }}"
-           panos_dest_zone: "{{ panos_dest_zone | from_yaml }}"
-           panos_source_ip: "{{ panos_source_ip | from_yaml }}"
-           panos_dest_ip: "{{ panos_dest_ip | from_yaml }}"
-           panos_application: "{{ panos_application | from_yaml }}"
-           panos_service: "{{ panos_service | from_yaml }}"
+    - name: Palo Alto Rule
+      block: 
+        - name: set variables to right type
+          set_fact:
+            panos_source_zone: "{{ panos_source_zone | from_yaml }}"
+            panos_dest_zone: "{{ panos_dest_zone | from_yaml }}"
+            panos_source_ip: "{{ panos_source_ip | from_yaml }}"
+            panos_dest_ip: "{{ panos_dest_ip | from_yaml }}"
+            panos_application: "{{ panos_application | from_yaml }}"
+            panos_service: "{{ panos_service | from_yaml }}"
 
-       - name: include variables (free-form)
-         include_vars: vars.yml  
-         no_log: 'yes'
+        - name: include variables (free-form)
+          include_vars: vars.yml  
+          no_log: 'yes'
       
-       - name: permit ssh to 1.1.1.1
-         panos_security_rule:
-            ip_address: "{{ panos_ip_address }}"
-            password: "{{ admin_password }}"
-            rule_name: "{{ rule_name }}"
-            description: "{{ rule_description }}"
-            source_zone: "{{ panos_source_zone }}"
-            destination_zone: "{{ panos_dest_zone }}"
-            source_ip: "{{ panos_source_ip }}"
-            destination_ip: "{{ panos_dest_ip }}"
-            application: "{{ panos_application }}"
-            service: "{{ panos_service }}"
+        - name: permit ssh to 1.1.1.1
+          panos_security_rule:
+             ip_address: "{{ panos_ip_address }}"
+             password: "{{ panos_password }}"
+             rule_name: "{{ panos_rule_name }}"
+             description: "{{ panos_description }}"
+             source_zone: "{{ panos_source_zone }}"
+             destination_zone: "{{ panos_dest_zone }}"
+             source_ip: "{{ panos_source_ip }}"
+             destination_ip: "{{ panos_dest_ip }}"
+             application: "{{ panos_application }}"
+             service: "{{ panos_service }}"
              # hip_profiles: ['any']
              # source_user: "{{ src_user }}" #in case we needed it
              # category: ['any']
-            action: 'allow'
-            commit: false 
-    when: paloalto == 'true' or both =='true'
+             action: 'allow'
+             commit: false 
+      when: paloalto == 'true' or both =='true'
