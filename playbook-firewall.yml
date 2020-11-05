@@ -21,7 +21,7 @@
           include_vars: vars.yml  
           no_log: 'yes'
       
-        - name: permit ssh to 1.1.1.1
+        - name: Add new Rule in to PANOS 
           panos_security_rule:
              ip_address: "{{ panos_ip_address }}"
              password: "{{ panos_password }}"
