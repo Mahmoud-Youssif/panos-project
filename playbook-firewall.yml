@@ -37,5 +37,6 @@
              # source_user: "{{ src_user }}" #in case we needed it
              # category: ['any']
              action: 'allow'
+             location: 'top'
              commit: false 
       when: paloalto == 'true' or both =='true'
